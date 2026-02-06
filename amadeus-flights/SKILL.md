@@ -56,6 +56,12 @@ pip install requests
 | Round trip | `scripts/search.py` | `--from LHR --to BCN --date 2026-03-15 --return 2026-03-20` |
 | Price offer | `scripts/price.py` | `--offer <offer-json>` |
 | Airport lookup | `scripts/airports.py` | `--query "Barcelona"` |
+| Airport routes | `scripts/routes.py` | `--airport LHR` |
+| Airline routes | `scripts/airline_routes.py` | `--airline BA` |
+| Airline lookup | `scripts/airlines.py` | `--code BA,IB` |
+| Check-in links | `scripts/checkin.py` | `--airline BA` |
+| Find destinations | `scripts/inspiration.py` | `--origin LHR` |
+| Cheapest dates | `scripts/cheapest_dates.py` | `--origin LHR --destination BCN` |
 
 ## Capabilities
 
@@ -111,6 +117,66 @@ Before booking, confirm an offer is still valid:
 python3 <skill>/scripts/price.py --offer '<offer-json-from-search>'
 ```
 
+### 6. Airport Routes (Where can I fly from X?)
+
+```bash
+python3 <skill>/scripts/routes.py --airport LHR --max 50 --format human
+```
+
+Shows all direct destinations from an airport.
+
+### 7. Airline Routes (Where does X fly?)
+
+```bash
+python3 <skill>/scripts/airline_routes.py --airline BA --max 50 --format human
+```
+
+Shows all destinations served by an airline.
+
+### 8. Airline Code Lookup
+
+```bash
+python3 <skill>/scripts/airlines.py --code "BA,IB,VY" --format human
+```
+
+Look up airline names by IATA codes.
+
+### 9. Check-in Links
+
+```bash
+python3 <skill>/scripts/checkin.py --airline BA --format human
+```
+
+Get direct check-in URLs for airlines.
+
+### 10. Flight Inspiration (Where's cheap from X?)
+
+```bash
+python3 <skill>/scripts/inspiration.py --origin LHR --format human
+python3 <skill>/scripts/inspiration.py --origin LHR --max-price 100 --nonstop
+```
+
+Find cheapest destinations from an origin. Options:
+- `--date` - Departure date or range
+- `--one-way` / `--round-trip` - Filter by trip type
+- `--duration` - Trip length in days
+- `--nonstop` - Direct flights only
+- `--max-price` - Price cap
+- `--view-by` - Group by: date, destination, duration, week, country
+
+⚠️ Uses cached data; may have limited results in test environment.
+
+### 11. Cheapest Dates (When's cheap to Y?)
+
+```bash
+python3 <skill>/scripts/cheapest_dates.py --origin LHR --destination BCN --format human
+python3 <skill>/scripts/cheapest_dates.py --origin LHR --destination BCN --date 2026-03-01,2026-03-31
+```
+
+Find the cheapest dates to fly a specific route.
+
+⚠️ Uses cached data; may have limited results in test environment.
+
 ## Common Airport Codes
 
 | Code | Airport |
@@ -153,3 +219,18 @@ Default is JSON. Add `--format human` for readable output:
 - Max 250 offers per search
 - Dates must be in future
 - Some routes may have limited test data
+
+## Scripts Summary
+
+| Script | Status | Notes |
+|--------|--------|-------|
+| `search.py` | ✅ Working | Core flight search |
+| `price.py` | ✅ Working | Confirm offer pricing |
+| `airports.py` | ✅ Working | Airport/city lookup |
+| `airlines.py` | ✅ Working | Airline code lookup |
+| `routes.py` | ✅ Working | Airport direct destinations |
+| `airline_routes.py` | ✅ Working | Airline destinations |
+| `checkin.py` | ✅ Working | Check-in links |
+| `inspiration.py` | ⚠️ Ready | Cached data API - limited in test |
+| `cheapest_dates.py` | ⚠️ Ready | Cached data API - limited in test |
+| `auth.py` | ✅ Internal | OAuth token management |
