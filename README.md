@@ -18,17 +18,22 @@ What if your AI assistant could help you plan, book, and manage travel as natura
 **Recommendation:** Start with Amadeus for prototyping — free test environment, pay-per-use in production.
 
 ### Amadeus Capabilities
-- Flight search & booking
-- Hotel search & booking
-- Airport info & flight status
-- Travel recommendations
-- Points of interest
+- ✅ Flight search & price comparison (search.py, compare_dates.py)
+- ✅ Airport/airline lookup (airports.py, airlines.py, routes.py)
+- ✅ Travel inspiration & cheapest dates (inspiration.py, cheapest_dates.py)
+- ✅ Check-in links & delay predictions (checkin.py, delay_prediction.py)
+- ✅ Hotel search & booking (via amadeus-hotels skill)
+- ✅ Airport transfers (via amadeus-transfers skill)
+- ✅ Tours & activities (via amadeus-experiences skill)
+- 🔄 Flight booking (in progress)
+- 🔄 Trip parser & itinerary management (planned)
 
 ## Ideas to Explore
 
-- [ ] Natural language flight search ("Find me flights to Barcelona next weekend under £200")
-- [ ] Price tracking & alerts
-- [ ] Trip planning assistant
+- [x] Natural language flight search ("Find me flights to Barcelona next weekend under £200")
+- [x] Date comparison tool (compare prices across flexible dates)
+- [ ] Price tracking & alerts (monitor specific routes for drops)
+- [ ] Trip planning assistant (end-to-end journey planner)
 - [ ] Multi-city itinerary builder
 - [ ] Integration with calendar (block travel days automatically)
 - [ ] Packing list generator based on destination & weather

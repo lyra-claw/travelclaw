@@ -62,6 +62,7 @@ pip install requests
 | Check-in links | `scripts/checkin.py` | `--airline BA` |
 | Find destinations | `scripts/inspiration.py` | `--origin LHR` |
 | Cheapest dates | `scripts/cheapest_dates.py` | `--origin LHR --destination BCN` |
+| Compare dates | `scripts/compare_dates.py` | `--from LHR --to BCN --dates 2026-03-15,2026-03-16` |
 
 ## Capabilities
 
@@ -177,6 +178,48 @@ Find the cheapest dates to fly a specific route.
 
 ⚠️ Uses cached data; may have limited results in test environment.
 
+### 12. Compare Dates (Which date is cheapest?)
+
+```bash
+# Compare specific dates
+python3 <skill>/scripts/compare_dates.py \
+  --from LHR --to BCN \
+  --dates 2026-03-15,2026-03-16,2026-03-17 \
+  --format human
+
+# Compare date range
+python3 <skill>/scripts/compare_dates.py \
+  --from LHR --to BCN \
+  --start 2026-03-15 --end 2026-03-22 \
+  --format human
+
+# Compare weekends only
+python3 <skill>/scripts/compare_dates.py \
+  --from LHR --to BCN \
+  --start 2026-03-01 --end 2026-03-31 \
+  --weekends-only \
+  --format human
+
+# Round trip comparison (7-day trips)
+python3 <skill>/scripts/compare_dates.py \
+  --from LHR --to BCN \
+  --dates 2026-03-15,2026-03-16,2026-03-17 \
+  --return-after 7 \
+  --format human
+```
+
+Compare flight prices across multiple specific dates or a date range. Perfect for finding the best departure date when you have flexibility. Unlike `cheapest_dates.py` (which uses cached API data), this script performs real searches for each date to give accurate current prices.
+
+Options:
+- `--dates` - Comma-separated list of specific dates
+- `--start` / `--end` - Search all dates in range
+- `--weekends-only` - Only Saturdays and Sundays
+- `--weekdays-only` - Only Monday-Friday
+- `--return-after` - Days until return (makes it round trip)
+- All standard filters: `--nonstop`, `--class`, `--max-price`, etc.
+
+✅ Uses live flight search API — more accurate than cached date APIs.
+
 ## Common Airport Codes
 
 | Code | Airport |
@@ -233,4 +276,5 @@ Default is JSON. Add `--format human` for readable output:
 | `checkin.py` | ✅ Working | Check-in links |
 | `inspiration.py` | ⚠️ Ready | Cached data API - limited in test |
 | `cheapest_dates.py` | ⚠️ Ready | Cached data API - limited in test |
+| `compare_dates.py` | ✅ Working | Live date comparison - accurate prices |
 | `auth.py` | ✅ Internal | OAuth token management |
